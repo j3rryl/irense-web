@@ -1,11 +1,9 @@
-import { Card, CardBody } from "@nextui-org/card";
 import React from "react";
+import PhysiciansTable from "./PhysiciansTable";
 
 const Page = () => {
   return (
-    <Card className="mx-5">
-      <CardBody>Physicians Page</CardBody>
-    </Card>
+    <PhysiciansTable/>
   );
 };
 

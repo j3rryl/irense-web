@@ -8,7 +8,7 @@ import { Button } from "@nextui-org/button";
 import React from "react";
 import NextLink from "next/link";
 
-const PatientActions = ({row}) => {
+const PhysicianActions = ({row}) => {
   return (
     <div className="relative flex justify-end items-center gap-2">
       <Dropdown>
@@ -28,7 +28,7 @@ const PatientActions = ({row}) => {
           <DropdownItem
             key="view"
             as={NextLink}
-            href={`/dashboard/patients/${row?.id}`}
+            href={`/dashboard/physicians/${row?.id}`}
           >
             View
           </DropdownItem>
@@ -47,4 +47,4 @@ const PatientActions = ({row}) => {
   );
 };
 
-export default PatientActions;
+export default PhysicianActions;

@@ -1,9 +1,12 @@
 import React from "react";
+import PatientDetails from "./PatientDetails";
 import DRClassificationTable from "./DRClassificationTable";
-
 const Page = () => {
   return (
-    <DRClassificationTable/>
+    <>
+    <PatientDetails/>
+    <DRClassificationTable patient={1}/>
+    </>
   );
 };
 

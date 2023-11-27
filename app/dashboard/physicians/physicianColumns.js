@@ -1,4 +1,4 @@
-import PatientActions from "./patientActions";
+import PhysicianActions from "./physicianActions";
 
 const columns = [
   // { name: "Row", uid: "id" },
@@ -10,7 +10,7 @@ const columns = [
   { name: "Actions", uid: "actions" },
 ];
 
-export const patientsRender = ({ row, columnKey }) => {
+export const physicianRender = ({ row, columnKey }) => {
   const cellValue = row[columnKey];
   const options = {
     year: "numeric",
@@ -35,7 +35,7 @@ export const patientsRender = ({ row, columnKey }) => {
         <span>{new Date(cellValue)?.toLocaleString("en-us", options)}</span>
       );
     case "actions":
-      return <PatientActions row={row}/>;
+      return <PhysicianActions row={row}/>;
     default:
       return cellValue;
   }

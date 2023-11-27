@@ -37,6 +37,8 @@ model Patient {
 
 model DRClassification {
   id        Int      @id @default(autoincrement())
+  eyeSide      String?
+  severity      String?
   description      String?
   physician    Physician     @relation(fields: [physicianId], references: [id])
   patient   Patient     @relation(fields: [patientId], references: [id])
@@ -54,8 +56,6 @@ model DRClassification {
 
 model Image {
   id        Int      @id @default(autoincrement())
-  eyeSide      String?
-  severity      String?
   imagePath      String?
   drclassification   DRClassification @relation(fields: [classificationId], references: [id])
   classificationId  Int

@@ -38,19 +38,19 @@ export const SidebarWrapper = () => {
             />
             <SidebarMenu title="Main Menu">
               <SidebarItem
-                isActive={pathname === "/dashboard/physicians"}
+                isActive={pathname.includes("/physicians")}
                 title="Physicians"
                 icon={<UsersIcon />}
                 href="/dashboard/physicians"
               />
               <SidebarItem
-                isActive={pathname === "/dashboard/patients"}
+                isActive={pathname.includes("/patients")}
                 title="Patients"
                 icon={<GraduateIcon />}
                 href="/dashboard/patients"
               />
               <SidebarItem
-                isActive={pathname === "/dashboard/classifications"}
+                isActive={pathname.includes("/classifications")}
                 title="Classifications"
                 icon={<FileIcon />}
                 href="/dashboard/classifications"

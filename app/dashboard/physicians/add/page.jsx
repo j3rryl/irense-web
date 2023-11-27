@@ -15,18 +15,18 @@ const Page = ({ params }) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const patient = Object.fromEntries(formData.entries());
+    const physician = Object.fromEntries(formData.entries());
 
     try {
     setLoading(true)
       const response = await fetch(
-        `/api/patients`,
+        `/api/physicians`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(patient),
+          body: JSON.stringify(physician),
         }
       );
       const responseData = await response.json();
@@ -52,7 +52,7 @@ const Page = ({ params }) => {
       <Card className="mx-5">
         <CardBody>
           <h6 className=" font-bold my-5">
-            Add New Patient
+            Add New Physician
           </h6>
           <form onSubmit={onSubmit}>
             <div className="grid md:grid-cols-2 md:gap-6 mb-3">
@@ -90,6 +90,14 @@ const Page = ({ params }) => {
                 name="phone"
                 isRequired
                 placeholder="0712345678"
+                variant="bordered"
+              />
+              <Input
+                autoFocus
+                label="Password"
+                type="password"
+                name="password"
+                isRequired
                 variant="bordered"
               />
             </div>

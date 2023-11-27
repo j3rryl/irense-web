@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/config";
+import prisma from "@/lib/config";
 
 export async function GET(request) {
     try {
@@ -19,6 +19,20 @@ export async function GET(request) {
 export async function POST(request) {
     try {
         const body = await request.json()
+        const existingPatient = await prisma.patient.findUnique({
+            where: { email: body?.email },
+        });
+
+        if (existingPatient) {
+            const message = "Patient with this email is already in use!";
+            return new Response(JSON.stringify({ message }), {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                status:400
+            });
+        }
+
         const patient = await prisma.patient.create({
             data: {
             firstName:body?.firstName,

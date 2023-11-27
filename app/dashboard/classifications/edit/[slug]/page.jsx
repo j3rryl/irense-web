@@ -20,9 +20,9 @@ const Page = ({ params }) => {
     try {
     setLoading(true)
       const response = await fetch(
-        `/api/patients`,
+        `/api/classifications`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -52,13 +52,13 @@ const Page = ({ params }) => {
       <Card className="mx-5">
         <CardBody>
           <h6 className=" font-bold my-5">
-            Add New Patient
+            Update Test
           </h6>
           <form onSubmit={onSubmit}>
             <div className="grid md:grid-cols-2 md:gap-6 mb-3">
               <Input
                 autoFocus
-                label="First Name"
+                label="Patient"
                 type="text"
                 name="firstName"
                 isRequired
@@ -67,7 +67,16 @@ const Page = ({ params }) => {
               />
               <Input
                 autoFocus
-                label="Last Name"
+                label="Eye Side"
+                type="text"
+                name="firstName"
+                isRequired
+                placeholder="Eric"
+                variant="bordered"
+              />
+              <Input
+                autoFocus
+                label="Description"
                 type="text"
                 name="lastName"
                 isRequired
@@ -76,20 +85,11 @@ const Page = ({ params }) => {
               />
               <Input
                 autoFocus
-                label="Email"
+                label="Images"
                 type="email"
                 name="email"
                 isRequired
                 placeholder="kaigua@gmail.com"
-                variant="bordered"
-              />
-              <Input
-                autoFocus
-                label="Phone Number"
-                type="tel"
-                name="phone"
-                isRequired
-                placeholder="0712345678"
                 variant="bordered"
               />
             </div>
