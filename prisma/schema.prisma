@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://cy45nflzfzq2mkt49yd6:pscale_pw_Io5INh41FQG524LizanGkJ8kwSIdHAj3qN6K6uQc7HW@aws.connect.psdb.cloud/irense?sslaccept=strict"
+  relationMode = "prisma"
+}
+
+model Physician {
+  id Int @id @default(autoincrement())
+  firstName      String?
+  lastName      String?
+  phone     String?
+  email     String   @unique
+  password  String
+  classifications     DRClassification[] 
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  deletedAt DateTime?
+
+}
+model Patient {
+  id Int @id @default(autoincrement())
+  firstName      String?
+  lastName      String?
+  phone      String?
+  email     String   @unique
+  classifications     DRClassification[] 
+  createdAt DateTime @default(now())
+  deletedAt DateTime?
+}
+
+model DRClassification {
+  id        Int      @id @default(autoincrement())
+  description      String?
+  physician    Physician     @relation(fields: [physicianId], references: [id])
+  patient   Patient     @relation(fields: [patientId], references: [id])
+  physicianId  Int
+  patientId  Int
+  images    Image[] 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+
+  @@index([physicianId])
+  @@index([patientId])
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  eyeSide      String?
+  severity      String?
+  imagePath      String?
+  drclassification   DRClassification @relation(fields: [classificationId], references: [id])
+  classificationId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  @@index([classificationId])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
