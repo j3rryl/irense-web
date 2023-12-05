@@ -1,11 +1,14 @@
 import React from "react";
 import PatientDetails from "./PatientDetails";
 import DRClassificationTable from "./DRClassificationTable";
-const Page = () => {
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+const Page = ({params}) => {
   return (
     <>
-    <PatientDetails/>
-    <DRClassificationTable patient={1}/>
+    <PatientDetails patient={params?.slug}/>
+    <DRClassificationTable patient={params?.slug}/>
+    <ToastContainer/>
     </>
   );
 };
