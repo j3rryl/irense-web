@@ -16,6 +16,8 @@ model Physician {
   firstName      String?
   lastName      String?
   phone     String?
+  status     String?
+  gender      Gender @default(Male)
   email     String   @unique
   password  String
   classifications     DRClassification[] 
@@ -29,6 +31,7 @@ model Patient {
   firstName      String?
   lastName      String?
   phone      String?
+  gender      Gender @default(Male)
   email     String   @unique
   classifications     DRClassification[] 
   createdAt DateTime @default(now())
@@ -69,4 +72,8 @@ model Image {
 enum Role {
   USER
   ADMIN
+}
+enum Gender {
+  Male
+  Female
 }

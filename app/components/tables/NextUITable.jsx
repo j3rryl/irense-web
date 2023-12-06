@@ -17,8 +17,8 @@ import {
   DropdownItem,
 } from "@nextui-org/dropdown";
 import { Pagination } from "@nextui-org/pagination";
-import { ChevronDownIcon } from "../ui/icons/ChevronDownIcon";
-import { SearchIcon } from "../ui/icons/searchicon";
+import { ChevronDownIcon } from "../icons/ChevronDownIcon";
+import { SearchIcon } from "../icons/searchicon";
 import { Spinner } from "@nextui-org/spinner";
 
 export default function NextUITable({

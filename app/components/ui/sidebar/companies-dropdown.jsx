@@ -8,9 +8,9 @@ import {
 } from "@nextui-org/react";
 import NextImage from "next/image";
 import React, { useState } from "react";
-import { AcmeIcon } from "../icons/acme-icon";
-import { AcmeLogo } from "../icons/acmelogo";
-import { BottomIcon } from "../icons/sidebar/bottom-icon";
+import { AcmeIcon } from "../../icons/acme-icon";
+import { AcmeLogo } from "../../icons/acmelogo";
+import { BottomIcon } from "../../icons/bottom-icon";
 
 export const CompaniesDropdown = () => {
   const [company, setCompany] = useState({
@@ -28,10 +28,12 @@ export const CompaniesDropdown = () => {
         <div className="flex items-center gap-2">
           <Image
             as={NextImage}
-            width={80}
-            height={80}
-            src="https://media.licdn.com/dms/image/C4E03AQHatm-utj-cFA/profile-displayphoto-shrink_800_800/0/1638098803049?e=2147483647&v=beta&t=qUhOB1NIgajsgdXEE3oD3akI81UI_wdwjFO-ig5mIFg"
-            alt="Mogei logo for GESS South Sudan"
+            priority
+            width={75}
+            height={75}
+            src="/images/retina.jpg"
+            className="w-auto h-auto"
+            alt="Company logo"
           />
           <div className="flex flex-col gap-4">
             <h3 className="text-xl font-medium m-0 text-default-900 -mb-4 whitespace-nowrap">

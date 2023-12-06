@@ -7,7 +7,7 @@ import {
   NavbarItem,
 } from "@nextui-org/react";
 import React from "react";
-import { NotificationIcon } from "../icons/navbar/notificationicon";
+import { NotificationIcon } from "../../icons/notificationicon";
 
 export const NotificationsDropdown = () => {
   return (
@@ -25,7 +25,7 @@ export const NotificationsDropdown = () => {
               title: "text-base font-semibold",
             }}
             key="1"
-            description="Hello there, welcome to cinetribe's web portal."
+            description="Hello there, welcome to samsss's web portal."
           >
             📣 Explore the portal!
           </DropdownItem>

@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Card, CardBody } from "@nextui-org/card";
+import { Select, SelectItem } from "@nextui-org/select";
 
 const Page = ({ params }) => {
   const router = useRouter();
@@ -16,7 +17,6 @@ const Page = ({ params }) => {
 
     const formData = new FormData(event.currentTarget);
     const physician = Object.fromEntries(formData.entries());
-
     try {
     setLoading(true)
       const response = await fetch(
@@ -34,7 +34,6 @@ const Page = ({ params }) => {
       if (response.ok) {
         toast.success(responseData?.message);
         setTimeout(() => {
-          router.refresh();
           router.back();
         }, 1000);
       } else {
@@ -100,6 +99,22 @@ const Page = ({ params }) => {
                 isRequired
                 variant="bordered"
               />
+              <Select
+                label="Gender"
+                name="gender"
+                placeholder="Select gender"
+                defaultSelectedKeys={["Male"]}
+                disallowEmptySelection
+                isRequired
+                variant="bordered"
+              >
+                  <SelectItem key="Male" value="Male">
+                    Male
+                  </SelectItem>
+                  <SelectItem key="Female" value="Female">
+                    Female
+                  </SelectItem>
+                </Select>
             </div>
             <div className="flex justify-end gap-6 items-center mt-3">
               <Button color="primary" type="submit" isLoading={loading}>

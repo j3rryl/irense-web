@@ -1,11 +1,11 @@
 import React from "react";
 import DRClassificationTable from "./DRClassificationTable";
 import PhysicianDetails from "./PhysicianDetails";
-const Page = () => {
+const Page = ({params}) => {
   return (
     <>
-    <PhysicianDetails/>
-    <DRClassificationTable physician={1}/>
+    <PhysicianDetails physician={params?.slug}/>
+    <DRClassificationTable physician={params?.slug}/>
     </>
   );
 };

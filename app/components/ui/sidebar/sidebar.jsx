@@ -6,10 +6,10 @@ import { SidebarItem } from "./sidebar-item";
 import { SidebarMenu } from "./sidebar-menu";
 import { useSidebarContext } from "../layout/layout-context";
 import { usePathname } from "next/navigation";
-import UsersIcon from "../icons/sidebar/users-icon";
-import LaptopIcon from "../icons/sidebar/laptop-icon";
-import GraduateIcon from "../icons/sidebar/graduate-icon";
-import FileIcon from "../icons/sidebar/file-icon";
+import LaptopIcon from "../../icons/laptop-icon";
+import GraduateIcon from "../../icons/graduate-icon";
+import FileIcon from "../../icons/file-icon";
+import UsersIcon from "../../icons/users-icon";
 
 export const SidebarWrapper = () => {
   const pathname = usePathname();
