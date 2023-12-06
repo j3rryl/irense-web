@@ -5,7 +5,7 @@ const Page = ({params}) => {
   return (
     <>
     <PhysicianDetails physician={params?.slug}/>
-    <DRClassificationTable physician={params?.slug}/>
+    {/* <DRClassificationTable physician={params?.slug}/> */}
     </>
   );
 };
