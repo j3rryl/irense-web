@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -26,6 +27,8 @@ model Physician {
   createdAt DateTime @default(now())
   deletedAt DateTime?
 
+  @@fulltext([firstName, lastName, phone, email])
+  // @@fulltext([content, title]
 }
 model Patient {
   id Int @id @default(autoincrement())
@@ -38,6 +41,8 @@ model Patient {
   classifications     DRClassification[] 
   createdAt DateTime @default(now())
   deletedAt DateTime?
+  
+  @@fulltext([firstName, lastName, phone, email])
 }
 
 model DRClassification {
@@ -51,13 +56,13 @@ model DRClassification {
 
   patient   Patient?     @relation(fields: [patientId], references: [id], onDelete: SetNull)
   patientId  Int?
-  
+
   images    Image[] 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
 
-
+  @@fulltext([severity, eyeSide])
   @@index([physicianId])
   @@index([patientId])
 }

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Card, CardBody } from "@nextui-org/card";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import NextUITable from "@/app/components/tables/NextUITable";
 import { columns, drClassificationRender } from "./drClassificationColumns";
 import { Button } from "@nextui-org/button";
@@ -62,6 +62,7 @@ const DRClassificationTable = ({patient}) => {
       if (result.ok) {
         toast.success(message?.message);
           router.refresh()
+          mutate(`/api/classifications?patientId=${patient}`)
       } else {
         toast.error(message?.error);
       }

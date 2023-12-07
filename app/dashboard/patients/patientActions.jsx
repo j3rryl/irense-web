@@ -9,6 +9,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { mutate } from "swr";
 import { toast } from "react-toastify";
+import NextLink from "next/link";
 
 const PatientActions = ({row}) => {
   const router = useRouter()
@@ -55,6 +56,8 @@ const PatientActions = ({row}) => {
           </DropdownItem>
           <DropdownItem
             key="view"
+            as={NextLink}
+            href={`/dashboard/patients/${row?.id}`}
           >
             View
           </DropdownItem>

@@ -21,6 +21,10 @@ export async function GET(request) {
       where: {
         id: classificationId,
       },
+      include: {
+        physician: true, 
+        patient: true,    
+      },
     });
     return new Response(JSON.stringify(classification), {
       headers: {

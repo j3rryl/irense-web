@@ -3,6 +3,7 @@ import prisma from "@/lib/config";
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const patientId = parseInt(searchParams.get("patientId"), 10);
+  const searchQuery = searchParams.get("query");
     try {
       let classifications;
       let count;
@@ -18,13 +19,31 @@ export async function GET(request) {
           where: {patientId: patientId}
         })
       } else {
-        classifications = await prisma.dRClassification.findMany({
-          include: {
-            physician: true, 
-            patient: true,    
-          },
-        })
-        count = await prisma.dRClassification.count()
+        if(searchQuery){
+          classifications = await prisma.dRClassification.findMany({
+            where: {
+                  severity: {
+                    search: searchQuery,
+                  },
+                  eyeSide: {
+                    search: searchQuery,
+                  },
+              },
+              include: {
+                physician: true, 
+                patient: true,    
+              },
+          })
+          count = classifications?.length;
+        } else {
+          classifications = await prisma.dRClassification.findMany({
+            include: {
+              physician: true, 
+              patient: true,    
+            },
+          })
+          count = await prisma.dRClassification.count()
+        }
       }
         return new Response(JSON.stringify({rows:classifications, count:count}), {
             headers: {

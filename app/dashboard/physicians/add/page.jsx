@@ -14,9 +14,13 @@ const Page = ({ params }) => {
   const [loading, setLoading] = useState(false)
   const onSubmit = async (event) => {
     event.preventDefault();
-
+    
     const formData = new FormData(event.currentTarget);
     const physician = Object.fromEntries(formData.entries());
+    if(physician.password!==physician.cpassword){
+      toast.error("Passwords do not match!");
+      return;
+    }
     try {
     setLoading(true)
       const response = await fetch(
@@ -96,6 +100,14 @@ const Page = ({ params }) => {
                 label="Password"
                 type="password"
                 name="password"
+                isRequired
+                variant="bordered"
+              />
+              <Input
+                autoFocus
+                label="Confirm Password"
+                type="password"
+                name="cpassword"
                 isRequired
                 variant="bordered"
               />

@@ -14,7 +14,7 @@ const PhysiciansTable = () => {
   const [filterValue, setFilterValue] = React.useState("");
 
   const { data, isLoading } = useSWR(
-    `/api/physicians`,
+    `/api/physicians?query=${filterValue}`,
     fetcher,
     {
       keepPreviousData: true,

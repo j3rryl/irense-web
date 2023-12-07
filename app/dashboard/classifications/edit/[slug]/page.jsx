@@ -1,5 +1,5 @@
 "use client";
-import { Input } from "@nextui-org/input";
+import { Input, Textarea } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Card, CardBody } from "@nextui-org/card";
+import { Select, SelectItem } from "@nextui-org/select";
 
 const Page = ({ params }) => {
   const router = useRouter();
@@ -55,43 +56,32 @@ const Page = ({ params }) => {
             Update Test
           </h6>
           <form onSubmit={onSubmit}>
-            <div className="grid md:grid-cols-2 md:gap-6 mb-3">
-              <Input
-                autoFocus
-                label="Patient"
-                type="text"
-                name="firstName"
-                isRequired
-                placeholder="Eric"
-                variant="bordered"
-              />
-              <Input
-                autoFocus
+            <div className="grid md:grid-cols-1 md:gap-6 mb-3">
+            <Select
                 label="Eye Side"
-                type="text"
-                name="firstName"
+                placeholder="Select side of eye"
+                defaultSelectedKeys={["right"]}
+                disallowEmptySelection
                 isRequired
-                placeholder="Eric"
+                name="eyeSide"
                 variant="bordered"
-              />
-              <Input
+              >
+                  <SelectItem key="right" value="right">
+                    Right
+                  </SelectItem>
+                  <SelectItem key="left" value="left">
+                    Left
+                  </SelectItem>
+                </Select>
+              <Textarea
                 autoFocus
                 label="Description"
                 type="text"
-                name="lastName"
+                name="description"
                 isRequired
-                placeholder="Kaigua"
                 variant="bordered"
               />
-              <Input
-                autoFocus
-                label="Images"
-                type="email"
-                name="email"
-                isRequired
-                placeholder="kaigua@gmail.com"
-                variant="bordered"
-              />
+              
             </div>
             <div className="flex justify-end gap-6 items-center mt-3">
               <Button color="primary" type="submit" isLoading={loading}>

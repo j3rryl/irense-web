@@ -9,12 +9,12 @@ import NextLink from "next/link"
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-const DRClassificationTable = ({patient}) => {
+const DRClassificationTable = () => {
   const [page, setPage] = React.useState(1);
   const [filterValue, setFilterValue] = React.useState("");
 
   const { data, isLoading } = useSWR(
-    `/api/classifications`,
+    `/api/classifications?query=${filterValue}`,
     fetcher,
     {
       keepPreviousData: true,

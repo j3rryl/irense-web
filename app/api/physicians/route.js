@@ -2,10 +2,38 @@ import prisma from "@/lib/config";
 import bcrypt from "bcrypt";
 
 export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const searchQuery = searchParams.get("query");
+
     try {
-        const physicians = await prisma.physician.findMany()
-        const count = await prisma.physician.count()
-        return new Response(JSON.stringify({rows:physicians, count:count}), {
+      let physicians;
+      let count;
+        if(searchQuery){
+          physicians = await prisma.physician.findMany({
+            where: {
+                  email: {
+                    search: searchQuery,
+                  },
+                
+                  firstName: {
+                    search: searchQuery,
+                  },
+                
+                  lastName: {
+                    search: searchQuery,
+                  },
+                
+                  phone: {
+                    search: searchQuery,
+                  },
+            },
+          })
+          count = physicians?.length;
+        } else {
+          physicians = await prisma.physician.findMany()
+          count = await prisma.physician.count()
+        } 
+      return new Response(JSON.stringify({rows:physicians, count:count}), {
             headers: {
               "Content-Type": "application/json",
             },

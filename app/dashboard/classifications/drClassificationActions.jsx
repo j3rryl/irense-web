@@ -19,20 +19,25 @@ const DRClassificationActions = ({row}) => {
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">
           <DropdownItem
-            key="edit"
+            key="update"
             as={NextLink}
             href={`/dashboard/classifications/edit/${row?.id}`}
           >
             Update
           </DropdownItem>
-        </DropdownMenu>
-        <DropdownMenu aria-label="Static Actions">
           <DropdownItem
             key="view"
             as={NextLink}
             href={`/dashboard/classifications/view/${row?.id}`}
           >
             View
+          </DropdownItem>
+          <DropdownItem
+            key="delete"
+            color="danger"
+            className="text-danger"
+          >
+            Delete
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>

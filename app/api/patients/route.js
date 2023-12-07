@@ -1,9 +1,35 @@
 import prisma from "@/lib/config";
 
 export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const searchQuery = searchParams.get("query");
     try {
-        const patients = await prisma.patient.findMany()
-        const count = await prisma.patient.count()
+      let patients;
+      let count;
+      if(searchQuery){
+        patients = await prisma.patient.findMany({
+          where: {
+                email: {
+                  search: searchQuery,
+                },
+              
+                firstName: {
+                  search: searchQuery,
+                },
+              
+                lastName: {
+                  search: searchQuery,
+                },
+                phone: {
+                  search: searchQuery,
+                },
+          },
+        })
+        count = patients?.length;
+      } else {
+        patients = await prisma.patient.findMany()
+        count = await prisma.patient.count()
+      }
         return new Response(JSON.stringify({rows:patients, count:count}), {
             headers: {
               "Content-Type": "application/json",
