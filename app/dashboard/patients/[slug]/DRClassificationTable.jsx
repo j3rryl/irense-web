@@ -9,21 +9,25 @@ import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure}
 import {Input, Textarea} from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const DRClassificationTable = ({patient}) => {
+  const router = useRouter()
+  const {data:session} = useSession()
   const [page, setPage] = React.useState(1);
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [filterValue, setFilterValue] = React.useState("");
 
   const { data, isLoading } = useSWR(
-    `/api/dr-classification/${patient}`,
+    `/api/classifications?patientId=${patient}`,
     fetcher,
     {
       keepPreviousData: true,
     }
   );
-  console.log(data);
+
   const hasSearchFilter = Boolean(filterValue);
   const filteredItems = React.useMemo(() => {
     let filteredRows = [...(data?.rows || [])];
@@ -43,22 +47,21 @@ const DRClassificationTable = ({patient}) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const classification = Object.fromEntries(formData.entries());
-    classification.physicianId = 1;
-    classification.patientId = patient;
+    classification.physicianId = session?.user?.id;
+    classification.patientId = Number(patient);
+
     try {
       const result = await fetch(`/api/classifications`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(role),
+        body: JSON.stringify(classification),
       });
       const message = await result.json();
       if (result.ok) {
-        setTimeout(() => {
-          toast.success(message?.message);
-        }, 1000);
-        router.back();
+        toast.success(message?.message);
+          router.refresh()
       } else {
         toast.error(message?.error);
       }
@@ -109,6 +112,7 @@ const DRClassificationTable = ({patient}) => {
                 defaultSelectedKeys={["right"]}
                 disallowEmptySelection
                 isRequired
+                name="eyeSide"
                 // className="max-w-xs"
                 // scrollShadowProps={{
                 //   isEnabled: false
@@ -122,6 +126,7 @@ const DRClassificationTable = ({patient}) => {
                   </SelectItem>
                 </Select>
                 <Textarea
+                name="description"
                   label="Description"
                   placeholder="Enter description"
                   isRequired

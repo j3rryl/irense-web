@@ -1,3 +1,4 @@
+import { User } from "@nextui-org/user";
 import DRClassificationActions from "./drClassificationActions";
 
 const columns = [
@@ -22,14 +23,22 @@ export const drClassificationRender = ({ row, columnKey }) => {
     hour12: true,
   };
   switch (columnKey) {
-    case "countyName":
+    case "patient":
+    case "physician":
       return (
-        <div className="flex flex-col">
-          <p className="text-bold text-small capitalize">{cellValue}</p>
-          <p className="text-bold text-tiny capitalize text-default-400">
-            {row.county}
-          </p>
-        </div>
+        <User
+        className="capitalize"  
+          name={`${cellValue?.firstName} ${cellValue?.lastName}`}
+          description={columnKey}
+          avatarProps={{
+            src: row?.image
+          }}
+        />
+        // <span>{cellValue?.firstName}</span>
+      );
+    case "eyeSide":
+      return (
+        <span className="capitalize">{cellValue}</span>
       );
     case "createdAt":
       return (
@@ -38,7 +47,9 @@ export const drClassificationRender = ({ row, columnKey }) => {
     case "actions":
       return <DRClassificationActions row={row}/>;
     default:
-      return cellValue;
+      return (
+        <span>{cellValue}</span>
+      )      
   }
 };
 

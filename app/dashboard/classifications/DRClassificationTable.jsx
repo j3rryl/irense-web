@@ -14,13 +14,12 @@ const DRClassificationTable = ({patient}) => {
   const [filterValue, setFilterValue] = React.useState("");
 
   const { data, isLoading } = useSWR(
-    `/api/dr-classification/${patient}`,
+    `/api/classifications`,
     fetcher,
     {
       keepPreviousData: true,
     }
   );
-  console.log(data);
   const hasSearchFilter = Boolean(filterValue);
   const filteredItems = React.useMemo(() => {
     let filteredRows = [...(data?.rows || [])];

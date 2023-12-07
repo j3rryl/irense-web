@@ -104,7 +104,7 @@ export async function DELETE(request) {
       },
     });
 
-    const message = "Record deleted successfully";
+    const message = "Physician deleted successfully";
     return new Response(JSON.stringify({ message }), {
       headers: {
         "Access-Control-Allow-Origin": origin || "*",

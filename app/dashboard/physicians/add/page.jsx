@@ -115,6 +115,22 @@ const Page = ({ params }) => {
                     Female
                   </SelectItem>
                 </Select>
+              <Select
+                label="Role"
+                name="role"
+                placeholder="Select role"
+                defaultSelectedKeys={["USER"]}
+                disallowEmptySelection
+                isRequired
+                variant="bordered"
+              >
+                  <SelectItem key="USER" value="USER">
+                    User
+                  </SelectItem>
+                  <SelectItem key="ADMIN" value="ADMIN">
+                    Administrator
+                  </SelectItem>
+                </Select>
             </div>
             <div className="flex justify-end gap-6 items-center mt-3">
               <Button color="primary" type="submit" isLoading={loading}>

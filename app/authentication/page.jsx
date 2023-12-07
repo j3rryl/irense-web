@@ -55,8 +55,8 @@ const AuthPage = () => {
           >
             <Image
               isBlurred
-              className="w-8 h-8 mr-2"
-              // src="/img/mogei.png"
+              className="w-12 h-10 mr-2"
+              src="/images/retina.jpg"
               alt="logo"
             />
             iRense

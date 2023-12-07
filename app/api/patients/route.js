@@ -34,12 +34,7 @@ export async function POST(request) {
         }
 
         const patient = await prisma.patient.create({
-            data: {
-            firstName:body?.firstName,
-            lastName:body?.lastName,
-            phone:body?.phone,
-            email:body?.email
-            }
+            data: body
         })
         const message = "Patient added successfully!"
         return new Response(JSON.stringify({message}), {

@@ -1,4 +1,5 @@
 "use client"
+import CardSkeleton from '@/app/components/CardSkeleton';
 import { Card, CardBody, CardHeader } from '@nextui-org/card'
 import React from 'react'
 
@@ -17,6 +18,7 @@ const PatientDetails = ({patient}) => {
         <CardHeader className='font-bold'>Patient Details</CardHeader>
         <hr className='my-3 mx-2'/>
         <CardBody className='gap-5 grid grid-cols-2 mx-5'>
+            {isLoading? <CardSkeleton/> :<>
             <div>
                 <p className='text-sm'>First Name</p>
                 <p className='text-stone-500 text-sm'>{data?.firstName}</p>
@@ -33,6 +35,7 @@ const PatientDetails = ({patient}) => {
                 <p className='text-sm'>Email</p>
                 <p className='text-stone-500 text-sm'>{data?.email}</p>
             </div>
+            </>}
         </CardBody>
     </Card>
   )

@@ -1,11 +1,12 @@
+import { User } from "@nextui-org/user";
 import PatientActions from "./patientActions";
 
 const columns = [
   // { name: "Row", uid: "id" },
-  { name: "First Name", uid: "firstName" },
-  { name: "Last Name", uid: "lastName" },
+  { name: "Name", uid: "firstName" },
   { name: "Phone Number", uid: "phone" },
   { name: "Email", uid: "email" },
+  { name: "Gender", uid: "gender" },
   { name: "Created At", uid: "createdAt" },
   { name: "Actions", uid: "actions" },
 ];
@@ -21,14 +22,19 @@ export const patientsRender = ({ row, columnKey }) => {
     hour12: true,
   };
   switch (columnKey) {
-    case "countyName":
+    case "firstName":
       return (
-        <div className="flex flex-col">
-          <p className="text-bold text-small capitalize">{cellValue}</p>
-          <p className="text-bold text-tiny capitalize text-default-400">
-            {row.county}
-          </p>
-        </div>
+        <User
+          classNames={{
+            name: "capitalize"
+          }}
+          name={`${row?.firstName} ${row?.lastName}`}
+          description={`Patient`}
+          avatarProps={{
+            src: row?.image
+          }}
+        />
+        // <span>{cellValue?.firstName}</span>
       );
     case "createdAt":
       return (

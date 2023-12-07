@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Card, CardBody } from "@nextui-org/card";
+import { Select, SelectItem } from "@nextui-org/select";
 
 const Page = ({ params }) => {
   const router = useRouter();
@@ -92,6 +93,22 @@ const Page = ({ params }) => {
                 placeholder="0712345678"
                 variant="bordered"
               />
+               <Select
+                label="Gender"
+                name="gender"
+                placeholder="Select gender"
+                defaultSelectedKeys={["Male"]}
+                disallowEmptySelection
+                isRequired
+                variant="bordered"
+              >
+                  <SelectItem key="Male" value="Male">
+                    Male
+                  </SelectItem>
+                  <SelectItem key="Female" value="Female">
+                    Female
+                  </SelectItem>
+                </Select>
             </div>
             <div className="flex justify-end gap-6 items-center mt-3">
               <Button color="primary" type="submit" isLoading={loading}>

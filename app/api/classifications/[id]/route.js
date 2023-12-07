@@ -12,16 +12,17 @@ export async function OPTIONS(request) {
   });
 }
 export async function GET(request) {
-  const patientId = Number(request.url.split("patients/")[1]);
+  const classificationId = Number(request.url.split("classifications/")[1]);
   const origin = request.headers.get("origin");
+  
   try {
     
-    const patient = await prisma.patient.findUnique({
+    const classification = await prisma.dRClassification.findUnique({
       where: {
-        id: patientId,
+        id: classificationId,
       },
     });
-    return new Response(JSON.stringify(patient), {
+    return new Response(JSON.stringify(classification), {
       headers: {
         "Access-Control-Allow-Origin": origin || "*",
         "Content-Type": "application/json",
@@ -36,17 +37,17 @@ export async function GET(request) {
 }
 
 export async function PUT(request) {
-  const patientId = Number(request.url.split("patients/")[1]);
+  const classificationId = Number(request.url.split("classifications/")[1]);
   const origin = request.headers.get("origin");
   try {
     const body = await request.json();
-    const patient = await prisma.patient.findUnique({
+    const classification = await prisma.dRClassification.findUnique({
       where: {
-        id: patientId,
+        id: classificationId,
       },
     });    
-    if (!patient) {
-      return new Response(JSON.stringify({ error: "Patient not found" }), {
+    if (!classification) {
+      return new Response(JSON.stringify({ error: "classification not found" }), {
         status: 404,
         headers: {
           "Access-Control-Allow-Origin": origin || "*",
@@ -54,9 +55,9 @@ export async function PUT(request) {
         },
       });
     }
-    const updatedPatient = await prisma.patient.update({
+    const updatedclassification = await prisma.classification.update({
       where: {
-        id: patientId,
+        id: classificationId,
       },
       data: body,
     });
@@ -77,18 +78,18 @@ export async function PUT(request) {
 }
 
 export async function DELETE(request) {
-  const patientId = Number(request.url.split("patients/")[1]);
+  const classificationId = Number(request.url.split("classifications/")[1]);
   const origin = request.headers.get("origin");
 
   try {
-    const patient = await prisma.patient.findUnique({
+    const classification = await prisma.dRClassification.findUnique({
       where: {
-        id: patientId,
+        id: classificationId,
       },
     });
 
-    if (!patient) {
-      return new Response(JSON.stringify({ error: "Patient not found!" }), {
+    if (!classification) {
+      return new Response(JSON.stringify({ error: "classification not found!" }), {
         status: 404,
         headers: {
           "Access-Control-Allow-Origin": origin || "*",
@@ -97,13 +98,13 @@ export async function DELETE(request) {
       });
     }
 
-    await prisma.patient.delete({
+    await prisma.dRClassification.delete({
       where: {
-        id: patientId,
+        id: classificationId,
       },
     });
 
-    const message = "Patient deleted successfully";
+    const message = "Record deleted successfully";
     return new Response(JSON.stringify({ message }), {
       headers: {
         "Access-Control-Allow-Origin": origin || "*",

@@ -40,6 +40,7 @@ export async function POST(request) {
             lastName:body?.lastName,
             phone:body?.phone,
             gender:body?.gender,
+            role:body?.role,
             email:body?.email,
             password: await bcrypt.hash(body?.password, 10)
             }
