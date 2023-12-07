@@ -8,26 +8,37 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Card, CardBody } from "@nextui-org/card";
 import { Select, SelectItem } from "@nextui-org/select";
+import useSWR from "swr";
+import CardSkeleton from "@/app/components/CardSkeleton";
+import { useSession } from "next-auth/react";
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const Page = ({ params }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false)
+  const { data, isLoading } = useSWR(
+    `/api/classifications/${params?.slug}`,
+    fetcher,
+    {
+      keepPreviousData: true,
+    }
+  );
   const onSubmit = async (event) => {
     event.preventDefault();
-
     const formData = new FormData(event.currentTarget);
-    const patient = Object.fromEntries(formData.entries());
+    const classification = Object.fromEntries(formData.entries());
+    classification.patientId = Number(params?.slug)
 
     try {
     setLoading(true)
       const response = await fetch(
-        `/api/classifications`,
+        `/api/classifications/${params?.slug}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(patient),
+          body: JSON.stringify(classification),
         }
       );
       const responseData = await response.json();
@@ -35,14 +46,12 @@ const Page = ({ params }) => {
       if (response.ok) {
         toast.success(responseData?.message);
         setTimeout(() => {
-          router.refresh();
           router.back();
         }, 1000);
       } else {
         toast.error(responseData?.message);
       }
     } catch (error) {
-      console.log(error);
       toast.error("Unknown Error, please contact System Administrator.");
     } finally{
         setLoading(false)
@@ -52,6 +61,9 @@ const Page = ({ params }) => {
     <>
       <Card className="mx-5">
         <CardBody>
+          {
+            isLoading? <CardSkeleton/>:
+          <>
           <h6 className=" font-bold my-5">
             Update Test
           </h6>
@@ -60,7 +72,7 @@ const Page = ({ params }) => {
             <Select
                 label="Eye Side"
                 placeholder="Select side of eye"
-                defaultSelectedKeys={["right"]}
+                defaultSelectedKeys={[data?.eyeSide]}
                 disallowEmptySelection
                 isRequired
                 name="eyeSide"
@@ -77,6 +89,7 @@ const Page = ({ params }) => {
                 autoFocus
                 label="Description"
                 type="text"
+                defaultValue={data?.description}
                 name="description"
                 isRequired
                 variant="bordered"
@@ -89,6 +102,8 @@ const Page = ({ params }) => {
               </Button>
             </div>
           </form>
+          </>
+          }
         </CardBody>
       </Card>
       <ToastContainer />

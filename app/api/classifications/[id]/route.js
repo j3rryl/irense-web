@@ -51,7 +51,7 @@ export async function PUT(request) {
       },
     });    
     if (!classification) {
-      return new Response(JSON.stringify({ error: "classification not found" }), {
+      return new Response(JSON.stringify({ error: "Classification not found" }), {
         status: 404,
         headers: {
           "Access-Control-Allow-Origin": origin || "*",
@@ -59,14 +59,14 @@ export async function PUT(request) {
         },
       });
     }
-    const updatedclassification = await prisma.classification.update({
+    const updatedclassification = await prisma.dRClassification.update({
       where: {
         id: classificationId,
       },
       data: body,
     });
 
-    const message = "Record(s) updated successfully"
+    const message = "Test updated successfully"
     return new Response(JSON.stringify({message}), {
       headers: {
         "Access-Control-Allow-Origin": origin || "*",
@@ -93,7 +93,7 @@ export async function DELETE(request) {
     });
 
     if (!classification) {
-      return new Response(JSON.stringify({ error: "classification not found!" }), {
+      return new Response(JSON.stringify({ error: "Test not found!" }), {
         status: 404,
         headers: {
           "Access-Control-Allow-Origin": origin || "*",
@@ -108,7 +108,7 @@ export async function DELETE(request) {
       },
     });
 
-    const message = "Record deleted successfully";
+    const message = "Test deleted successfully";
     return new Response(JSON.stringify({ message }), {
       headers: {
         "Access-Control-Allow-Origin": origin || "*",
