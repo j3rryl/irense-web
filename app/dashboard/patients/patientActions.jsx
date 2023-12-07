@@ -28,10 +28,8 @@ const PatientActions = ({row}) => {
   
         if (response.ok) {
           toast.success(responseData?.message);
-          setTimeout(() => {
             router.refresh();
             mutate("/api/patients");
-          }, 1000);
         } else {
           toast.error(responseData?.message);
         }

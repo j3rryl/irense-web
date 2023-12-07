@@ -20,7 +20,6 @@ const PatientsTable = ({ activeYear }) => {
       keepPreviousData: true,
     }
   );
-  console.log(data);
   const hasSearchFilter = Boolean(filterValue);
   const filteredItems = React.useMemo(() => {
     let filteredRows = [...(data?.rows || [])];

@@ -23,6 +23,7 @@ model Physician {
   image      String?
   password  String
   classifications     DRClassification[] 
+  notifications     Notification[] 
   role      Role     @default(USER)
   createdAt DateTime @default(now())
   deletedAt DateTime?
@@ -39,6 +40,7 @@ model Patient {
   gender      Gender @default(Male)
   email     String   @unique
   classifications     DRClassification[] 
+  notifications     Notification[] 
   createdAt DateTime @default(now())
   deletedAt DateTime?
   
@@ -63,6 +65,23 @@ model DRClassification {
   deletedAt DateTime?
 
   @@fulltext([severity, eyeSide])
+  @@index([physicianId])
+  @@index([patientId])
+}
+model Notification {
+  id        Int      @id @default(autoincrement())
+  message      String?
+
+  physician    Physician? @relation(fields: [physicianId], references: [id], onDelete: SetNull)
+  physicianId  Int?
+
+  patient   Patient?     @relation(fields: [patientId], references: [id], onDelete: SetNull)
+  patientId  Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@fulltext([message])
   @@index([physicianId])
   @@index([patientId])
 }

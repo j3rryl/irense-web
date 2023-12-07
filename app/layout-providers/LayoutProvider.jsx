@@ -2,8 +2,12 @@
 import { NextUIProvider } from "@nextui-org/react";
 import React from "react";
 import { Layout } from "../components/ui/layout/layout";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from 'react-toastify';
+import usePusher from "../utils/usePusher";
 
 const LayoutProvider = ({ children }) => {
+  usePusher()
   return (
     <NextUIProvider>
       <Layout>
@@ -11,6 +15,7 @@ const LayoutProvider = ({ children }) => {
           {children}
         </div>
       </Layout>
+      <ToastContainer/>
     </NextUIProvider>
   );
 };

@@ -28,10 +28,8 @@ const router = useRouter()
   
         if (response.ok) {
           toast.success(responseData?.message);
-          setTimeout(() => {
             router.refresh();
             mutate("/api/physicians");
-          }, 1000);
         } else {
           toast.error(responseData?.message);
         }
