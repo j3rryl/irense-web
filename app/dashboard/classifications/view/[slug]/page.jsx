@@ -32,11 +32,11 @@ const Page = ({params}) => {
 
             <div>
                 <p className='text-sm capitalize'>Eye Side</p>
-                <p className='text-stone-500 text-sm'>{data?.eyeSide}</p>
+                <p className='text-stone-500 text-sm capitalize'>{data?.eyeSide}</p>
             </div>
             <div>
                 <p className='text-sm capitalize'>Severity</p>
-                <p className='text-stone-500 text-sm'>{data?.severity}</p>
+                <p className='text-stone-500 text-sm capitalize'>{data?.severity}</p>
             </div>
             <div>
                 <p className='text-sm capitalize'>Description</p>
