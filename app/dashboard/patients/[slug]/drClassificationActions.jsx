@@ -21,7 +21,7 @@ const DRClassificationActions = ({row}) => {
           <DropdownItem
             key="view"
             as={NextLink}
-            href={`/dashboard/patients/${row?.id}`}
+            href={`/dashboard/classifications/${row?.id}`}
           >
             View
           </DropdownItem>
