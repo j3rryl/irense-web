@@ -21,7 +21,7 @@ const DRClassificationActions = ({row}) => {
           <DropdownItem
             key="view"
             as={NextLink}
-            href={`/dashboard/classifications/${row?.id}`}
+            href={`/dashboard/classifications/view/${row?.id}`}
           >
             View
           </DropdownItem>
