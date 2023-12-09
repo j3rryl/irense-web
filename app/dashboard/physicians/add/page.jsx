@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
@@ -9,28 +9,43 @@ import "react-toastify/dist/ReactToastify.css";
 import { Card, CardBody } from "@nextui-org/card";
 import { Select, SelectItem } from "@nextui-org/select";
 
-const Page = ({ params }) => {
+import { FilePond, registerPlugin } from "react-filepond";
+
+// Import FilePond styles
+import "filepond/dist/filepond.min.css";
+
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+const Page = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false)
+  const pond = useRef(null);
   const onSubmit = async (event) => {
     event.preventDefault();
     
     const formData = new FormData(event.currentTarget);
-    const physician = Object.fromEntries(formData.entries());
-    if(physician.password!==physician.cpassword){
+
+    //Filepond
+
+    const fileItems = pond.current.getFiles();
+    const file = fileItems[0].file;
+    formData.set("image", file);
+    // const physician = Object.fromEntries(formData.entries());
+    if(formData.get("password")!==formData.get("cpassword")){
       toast.error("Passwords do not match!");
       return;
     }
+    formData.delete("cpassword");
     try {
     setLoading(true)
       const response = await fetch(
         `/api/physicians`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(physician),
+          body: formData,
         }
       );
       const responseData = await response.json();
@@ -144,6 +159,15 @@ const Page = ({ params }) => {
                   </SelectItem>
                 </Select>
             </div>
+            <FilePond
+                ref={pond}
+                allowReorder={true}
+                maxFiles={1}
+                required
+                server="/api/uploads"
+                name="file"
+                labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+              />
             <div className="flex justify-end gap-6 items-center mt-3">
               <Button color="primary" type="submit" isLoading={loading}>
                 Save

@@ -84,9 +84,9 @@ const DRClassificationTable = ({patient}) => {
           columns={columns}
           renderCell={drClassificationRender}
           isLoading={isLoading}
-          page={page}
-          pages={pages}
-          setPage={setPage}
+          // page={page}
+          // pages={pages}
+          // setPage={setPage}
           rowCount={rowCount}
           filteredItems={filteredItems}
           hasSearchFilter={hasSearchFilter}

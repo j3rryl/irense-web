@@ -10,7 +10,6 @@ import { columns, physicianRender } from "./physicianColumns";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const PhysiciansTable = () => {
-  const [page, setPage] = React.useState(1);
   const [filterValue, setFilterValue] = React.useState("");
 
   const { data, isLoading } = useSWR(
@@ -48,9 +47,9 @@ const PhysiciansTable = () => {
           columns={columns}
           renderCell={physicianRender}
           isLoading={isLoading}
-          page={page}
-          pages={pages}
-          setPage={setPage}
+          // page={page}
+          // pages={pages}
+          // setPage={setPage}
           rowCount={rowCount}
           filteredItems={filteredItems}
           hasSearchFilter={hasSearchFilter}

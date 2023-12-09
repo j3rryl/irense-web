@@ -26,9 +26,6 @@ export default function NextUITable({
   selectionType = "single",
   renderCell,
   isLoading = false,
-  page,
-  pages,
-  setPage,
   rowCount,
   filteredItems,
   hasSearchFilter,
@@ -48,7 +45,7 @@ export default function NextUITable({
   });
   const loadingState = isLoading ? "loading" : "idle";
 
-  // const [page, setPage] = React.useState(1);
+  const [page, setPage] = React.useState(1);
 
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
@@ -58,6 +55,8 @@ export default function NextUITable({
     );
   }, [visibleColumns, columns]);
 
+  const pages = Math.ceil(filteredItems.length / rowsPerPage);
+
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
@@ -66,14 +65,14 @@ export default function NextUITable({
   }, [page, filteredItems, rowsPerPage]);
 
   const sortedItems = React.useMemo(() => {
-    return [...filteredItems].sort((a, b) => {
+    return [...items].sort((a, b) => {
       const first = a[sortDescriptor.column];
       const second = b[sortDescriptor.column];
       const cmp = first < second ? -1 : first > second ? 1 : 0;
 
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
-  }, [sortDescriptor, filteredItems]);
+  }, [sortDescriptor, items]);
 
   // const renderCell = React.useCallback((row, columnKey) => {
   //   const cellValue = row[columnKey];
@@ -199,17 +198,18 @@ export default function NextUITable({
               filteredItems?.length?.toLocaleString("en-us")}{" "}
             rows
           </span>
-          {/* <label className="flex items-center text-default-400 text-small">
+          <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
               className="bg-transparent outline-none text-default-400 text-small"
               onChange={onRowsPerPageChange}
+              defaultValue={10}
             >
               <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
             </select>
-          </label> */}
+          </label>
         </div>
       </div>
     );

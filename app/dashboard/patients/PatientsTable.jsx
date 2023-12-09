@@ -48,9 +48,9 @@ const PatientsTable = ({ activeYear }) => {
           columns={columns}
           renderCell={patientsRender}
           isLoading={isLoading}
-          page={page}
-          pages={pages}
-          setPage={setPage}
+          // page={page}
+          // pages={pages}
+          // setPage={setPage}
           rowCount={rowCount}
           filteredItems={filteredItems}
           hasSearchFilter={hasSearchFilter}

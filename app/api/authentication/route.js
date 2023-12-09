@@ -34,7 +34,6 @@ export async function POST(request) {
     );
   }
   if (user && (await bcrypt.compare(body?.password, user?.password))) {
-    console.log(user);
     const result = {
       ...user,
       success: true,

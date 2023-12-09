@@ -23,7 +23,7 @@ export const UserDropdown = () => {
             as="button"
             color="secondary"
             size="md"
-            src="https://media.licdn.com/dms/image/C4E03AQHatm-utj-cFA/profile-displayphoto-shrink_800_800/0/1638098803049?e=2147483647&v=beta&t=qUhOB1NIgajsgdXEE3oD3akI81UI_wdwjFO-ig5mIFg"
+            src={session?.user?.image}
           />
         </DropdownTrigger>
       </NavbarItem>

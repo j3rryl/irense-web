@@ -17,7 +17,7 @@ model Physician {
   firstName      String?
   lastName      String?
   phone     String?
-  status     String?
+  status     Status? @default(active)
   gender      Gender @default(Male)
   email     String   @unique
   image      String?
@@ -105,4 +105,9 @@ enum Role {
 enum Gender {
   Male
   Female
+}
+enum Status {
+  active
+  deactivated
+  inactive
 }
