@@ -26,7 +26,8 @@ export async function GET(request) {
       },
       include: {
         physician: true, 
-        patient: true,    
+        patient: true,
+        image: true
       },
     });
     return new Response(JSON.stringify(classification), {

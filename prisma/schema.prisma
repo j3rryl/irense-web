@@ -59,7 +59,7 @@ model DRClassification {
   patient   Patient?     @relation(fields: [patientId], references: [id], onDelete: SetNull)
   patientId  Int?
 
-  images    Image[] 
+  image    Image? 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
@@ -91,7 +91,7 @@ model Image {
   imagePath      String?
   classified Boolean? @default(false)
   drclassification   DRClassification @relation(fields: [classificationId], references: [id], onDelete: Cascade)
-  classificationId  Int
+  classificationId  Int @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?

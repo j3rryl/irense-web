@@ -1,6 +1,7 @@
 "use client"
 import CardSkeleton from '@/app/components/CardSkeleton';
 import { Card, CardBody, CardHeader } from '@nextui-org/card'
+import { Image } from '@nextui-org/image';
 import React from 'react'
 
 import useSWR from "swr";
@@ -21,15 +22,16 @@ const Page = ({params}) => {
         minute: "numeric",
         hour12: true,
       };
+      console.log(data);
   return (
     <Card className='mx-5'>
         <CardHeader className='font-bold'>Classification Details</CardHeader>
         <hr className='my-3 mx-2'/>
-        <CardBody className='gap-5'>
+        <CardBody className=''>
             {isLoading? <CardSkeleton/> : 
             <>
-            <div className='grid grid-cols-2 mx-5 gap-2'>
-
+            
+            <div className='grid grid-cols-2 gap-2 mb-5'>
             <div>
                 <p className='text-sm capitalize'>Eye Side</p>
                 <p className='text-stone-500 text-sm capitalize'>{data?.eyeSide}</p>
@@ -48,7 +50,17 @@ const Page = ({params}) => {
             </div> */}
             
             </div>
-            <div className='flex justify-end items-center gap-3 mb-5'>
+            <div className='flex justify-center items-center !overflow-hidden mb-5 w-5/6'>
+                <Image
+                    isBlurred
+                    // width={240}
+                    // width={250}
+                    src={data?.image?.imagePath}
+                    alt="NextUI Album Cover"
+                    classNames="m-5"
+                    />
+            </div>
+            <div className='flex justify-end items-center mb-5'>
             <div>
                 <p className='text-stone-500 text-xs'>Physician: {data?.physician?.firstName+" "+data?.physician?.lastName}</p>
                 <span className='text-stone-500 text-xs'>
