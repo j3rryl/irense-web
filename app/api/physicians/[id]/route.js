@@ -1,5 +1,5 @@
 import prisma from "@/lib/config";
-import { rmdir } from 'fs/promises'
+import { rm } from 'fs/promises'
 const path = require('path'); 
 
 export async function OPTIONS(request) {
@@ -103,7 +103,7 @@ export async function DELETE(request) {
     // Delete the directory if needed
     try {
       const directoryPath = path.join(process.cwd(), `/public/uploads/profile/${physician?.id}`);
-      await rmdir(directoryPath, { recursive: true });
+      await rm(directoryPath, { recursive: true });
     } catch (error) {
       console.error('Error deleting directory:', error);
     }

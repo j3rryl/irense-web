@@ -81,7 +81,7 @@ const Page = () => {
                 name="firstName"
                 isRequired
                 placeholder="Eric"
-                variant="bordered"
+                // variant="bordered"
               />
               <Input
                 autoFocus
@@ -90,7 +90,7 @@ const Page = () => {
                 name="lastName"
                 isRequired
                 placeholder="Kaigua"
-                variant="bordered"
+                // variant="bordered"
               />
               <Input
                 autoFocus
@@ -99,7 +99,7 @@ const Page = () => {
                 name="email"
                 isRequired
                 placeholder="kaigua@gmail.com"
-                variant="bordered"
+                // variant="bordered"
               />
               <Input
                 autoFocus
@@ -108,7 +108,7 @@ const Page = () => {
                 name="phone"
                 isRequired
                 placeholder="0712345678"
-                variant="bordered"
+                // variant="bordered"
               />
               <Input
                 autoFocus
@@ -116,7 +116,7 @@ const Page = () => {
                 type="password"
                 name="password"
                 isRequired
-                variant="bordered"
+                // variant="bordered"
               />
               <Input
                 autoFocus
@@ -124,7 +124,7 @@ const Page = () => {
                 type="password"
                 name="cpassword"
                 isRequired
-                variant="bordered"
+                // variant="bordered"
               />
               <Select
                 label="Gender"
@@ -133,7 +133,7 @@ const Page = () => {
                 defaultSelectedKeys={["Male"]}
                 disallowEmptySelection
                 isRequired
-                variant="bordered"
+                // variant="bordered"
               >
                   <SelectItem key="Male" value="Male">
                     Male
@@ -149,7 +149,7 @@ const Page = () => {
                 defaultSelectedKeys={["USER"]}
                 disallowEmptySelection
                 isRequired
-                variant="bordered"
+                // variant="bordered"
               >
                   <SelectItem key="USER" value="USER">
                     User

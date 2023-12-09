@@ -1,4 +1,6 @@
 import prisma from "@/lib/config";
+import { rm } from 'fs/promises'
+const path = require('path');
 
 export async function OPTIONS(request) {
   const origin = request.headers.get("origin");
@@ -95,6 +97,14 @@ export async function DELETE(request) {
           "Content-Type": "application/json",
         },
       });
+    }
+
+    // Delete the directory if needed
+    try {
+      const directoryPath = path.join(process.cwd(), `/public/uploads/patients/${patient?.id}`);
+      await rm(directoryPath, { recursive: true });
+    } catch (error) {
+      console.error('Error deleting directory:', error);
     }
 
     await prisma.patient.delete({
