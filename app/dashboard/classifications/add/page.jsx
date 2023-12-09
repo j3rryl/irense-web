@@ -1,7 +1,7 @@
 "use client";
 import { Input, Textarea } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
@@ -13,10 +13,24 @@ import { Avatar } from "@nextui-org/avatar";
 import { useSession } from "next-auth/react";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
+import { FilePond, registerPlugin } from "react-filepond";
+
+// Import FilePond styles
+import "filepond/dist/filepond.min.css";
+
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+
+
 const Page = () => {
   const router = useRouter();
   const { data: session } = useSession()
   const [loading, setLoading] = useState(false)
+  const pond = useRef(null);
+
   
   const { data, isLoading } = useSWR(
     `/api/patients`,
@@ -34,19 +48,21 @@ const Page = () => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const classification = Object.fromEntries(formData.entries());
-    classification.physicianId = session?.user?.id
-    classification.patientId = Number(classification.patientId)
+    formData.set('physicianId', session?.user?.id)
+    formData.set('patientId', Number(formData.get('patientId')))
+
+    //Filepond
+    const fileItems = pond.current.getFiles();
+    const file = fileItems[0].file;
+    formData.set("image", file);
+
     try {
     setLoading(true)
       const response = await fetch(
         `/api/classifications`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(classification),
+          body: formData,
         }
       );
       const responseData = await response.json();
@@ -82,7 +98,7 @@ const Page = () => {
                 name="patientId"
                 placeholder="Select patient"
                 isRequired
-                variant="bordered"
+                // variant="bordered"
                 disallowEmptySelection
                 isLoading={isLoading}
                 renderValue={(items) => {
@@ -98,7 +114,7 @@ const Page = () => {
                 {(patient) => (
                   <SelectItem key={patient.id} textValue={patient.firstName}>
                     <div className="flex gap-2 items-center">
-                      <Avatar alt={patient.firstName} className="flex-shrink-0" size="sm" src={patient.avatar} />
+                      <Avatar alt={patient.firstName} className="flex-shrink-0" size="sm" src={patient.image} />
                       <div className="flex flex-col">
                         <span className="text-small">{patient.firstName}</span>
                         <span className="text-tiny text-default-400">{patient.email}</span>
@@ -114,7 +130,7 @@ const Page = () => {
                 disallowEmptySelection
                 isRequired
                 name="eyeSide"
-                variant="bordered"
+                // variant="bordered"
                 // className="max-w-xs"
                 // scrollShadowProps={{
                 //   isEnabled: false
@@ -127,15 +143,25 @@ const Page = () => {
                     Left
                   </SelectItem>
                 </Select>
-              <Textarea
+            </div>
+            <Textarea
+            className="mb-3"
                 autoFocus
                 label="Description"
                 type="text"
                 name="description"
                 isRequired
-                variant="bordered"
+                // variant="bordered"
               />
-            </div>
+              <FilePond
+                ref={pond}
+                allowReorder={true}
+                maxFiles={1}
+                required
+                server="/api/uploads"
+                name="file"
+                labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+              />
             <div className="flex justify-end gap-6 items-center mt-3">
               <Button color="primary" type="submit" isLoading={loading}>
                 Save

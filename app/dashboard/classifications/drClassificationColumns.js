@@ -31,7 +31,7 @@ export const drClassificationRender = ({ row, columnKey }) => {
           name={`${cellValue?.firstName} ${cellValue?.lastName}`}
           description={columnKey}
           avatarProps={{
-            src: row?.image
+            src: cellValue?.image
           }}
         />
         // <span>{cellValue?.firstName}</span>

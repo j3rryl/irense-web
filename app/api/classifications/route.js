@@ -1,4 +1,7 @@
 import prisma from "@/lib/config";
+import { writeFile, access, mkdir } from 'fs/promises'
+const path = require('path'); 
+
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -59,17 +62,61 @@ export async function GET(request) {
   }
 export async function POST(request) {
     try {
-        const body = await request.json()
-        const classification = await prisma.dRClassification.create({
+      const formData = await request.formData();
+      const body = Object.fromEntries(formData.entries());
+
+      const classification = await prisma.dRClassification.create({
             data: {
-            eyeSide:body?.eyeSide,
-            description:body?.description,
-            physicianId:body?.physicianId,
-            patientId:body?.patientId
+            eyeSide: body?.eyeSide,
+            description: body?.description,
+            physicianId: Number(body?.physicianId),
+            patientId: Number(body?.patientId)
             }
         })
+
+        const file = formData.get('image');
+        if (file) {
+          const imageClassification = await prisma.image.create({
+            data: {
+            classificationId: classification?.id,
+            }
+        })
+          try {
+          const bytes = await file.arrayBuffer()
+          const buffer = Buffer.from(bytes)
+          const directoryPath = path.join(process.cwd(), `/public/uploads/classifications/${imageClassification?.id}/`);
+
+          // Ensure the directory exists or create it
+          try {
+            await access(directoryPath);
+          } catch (error) {
+            if (error.code === 'ENOENT') {
+              // Directory doesn't exist, create it
+              await mkdir(directoryPath, { recursive: true });
+            } else {
+              throw error;
+            }
+          }
+
+          const filePath = path.join(directoryPath, file.name);
+          await writeFile(filePath, buffer)
+          const imagePath = `/uploads/classifications/${imageClassification?.id}/${file.name}`
+          await prisma.image.update({
+            where: {
+              id: imageClassification?.id,
+            },
+            data: {
+              imagePath: imagePath
+            },
+          });
+          } catch (error) {
+            console.log(error);
+          }
+          
+        }
+
         const message = "Test added successfully!"
-        return new Response(JSON.stringify({message}), {
+        return new Response(JSON.stringify({ message }), {
             headers: {
               "Content-Type": "application/json",
             },
@@ -82,15 +129,3 @@ export async function POST(request) {
     }
   }
   
-  // id        Int      @id @default(autoincrement())
-  // eyeSide      String?
-  // severity      String?
-  // description      String?
-  // physician    Physician     @relation(fields: [physicianId], references: [id])
-  // patient   Patient     @relation(fields: [patientId], references: [id])
-  // physicianId  Int
-  // patientId  Int
-  // images    Image[] 
-  // createdAt DateTime @default(now())
-  // updatedAt DateTime @updatedAt
-  // deletedAt DateTime?

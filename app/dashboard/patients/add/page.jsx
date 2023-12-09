@@ -29,7 +29,6 @@ const Page = () => {
 
     const formData = new FormData(event.currentTarget);
     //Filepond
-
     const fileItems = pond.current.getFiles();
     const file = fileItems[0].file;
     formData.set("image", file);

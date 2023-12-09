@@ -89,7 +89,8 @@ model Notification {
 model Image {
   id        Int      @id @default(autoincrement())
   imagePath      String?
-  drclassification   DRClassification @relation(fields: [classificationId], references: [id])
+  classified Boolean? @default(false)
+  drclassification   DRClassification @relation(fields: [classificationId], references: [id], onDelete: Cascade)
   classificationId  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

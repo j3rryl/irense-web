@@ -6,14 +6,15 @@ async function main() {
   const jeremy = await prisma.physician.upsert({
     where: { email: 'jmunroe@strathmore.edu' },
     update: {},
-    data: {
+    create: {
         firstName: 'Jeremy',
         lastName: 'Munroe',
         phone: '0723457890',
         status: 'active',
         gender: 'Male',
+        image: '/images/download.jpg',
         email: 'jmunroe@strathmore.edu',
-        password: await bcrypt.hash('password123', 10), 
+        password: await bcrypt.hash('123', 10), 
     },
   })
   console.log({ jeremy })
