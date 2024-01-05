@@ -76,6 +76,53 @@ export async function POST(request) {
 
         const file = formData.get('image');
         if (file) {
+          try {
+            const response = await fetch('http://localhost:5000/check_level', {
+              method: 'POST',
+              body: formData,
+            });
+      
+            if (response.ok) {
+              const result = await response.json();
+              if (result.level) {
+                let severity = "No DR"
+                switch (result.level) {
+                  case 0:
+                      severity = "No DR";
+                      break;
+                  case 1:
+                      severity = "Mild";
+                      break;
+                  case 2:
+                      severity = "Moderate";
+                      break;
+                  case 3:
+                      severity = "Severe";
+                      break;
+                  case 4:
+                      severity = "Proliferative";
+                      break;
+                  default:
+                    severity = "No DR";
+                    break;
+                }
+                await prisma.dRClassification.update({
+                  where: {
+                    id: classification?.id,
+                  },
+                  data: {
+                    severity: severity
+                  },
+                });
+              } else {
+                console.error(result.error);
+              }
+            } else {
+              console.error('Server response not okay');
+            }
+          } catch (error) {
+            console.error('Error during fetch:', error);
+          }
           const imageClassification = await prisma.image.create({
             data: {
             classificationId: classification?.id,
