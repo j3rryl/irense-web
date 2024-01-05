@@ -1,5 +1,6 @@
 import { User } from "@nextui-org/user";
 import DRClassificationActions from "./drClassificationActions";
+import { Chip } from "@nextui-org/chip";
 
 const columns = [
   // { name: "Row", uid: "id" },
@@ -36,6 +37,10 @@ export const drClassificationRender = ({ row, columnKey }) => {
         />
         // <span>{cellValue?.firstName}</span>
       );
+    case "severity":
+      return (
+        <Chip color={cellValue==='No DR'?'primary':cellValue==='Mild'?'default':cellValue==='Moderate'?'secondary':cellValue==='Severe'?'warning':'danger'}>{cellValue}</Chip>
+      )
     case "eyeSide":
       return (
         <span className="capitalize">{cellValue}</span>

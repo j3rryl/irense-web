@@ -19,59 +19,27 @@ const Page = () => {
   const list = [
     {
       key: 1,
-      title: "Number of Schools",
-      quantity: 0,
+      title: "Number of Tests",
+      quantity: 12,
       percentage: 9,
       logo: <SchoolIcon />,
       end: <UpShortIcon />,
     },
     {
-      key: 2,
-      title: "Enrolled Learners",
-      quantity: 0,
-      percentage: 3.48,
-      logo: <GraduateIcon />,
-      end: <DownShortIcon />,
-    },
-    {
       key: 3,
-      title: "Number of Teachers",
-      quantity: 0,
+      title: "Number of Physicians",
+      quantity: 2,
       percentage: 12,
       logo: <TeacherIcon />,
       end: <UpShortIcon />,
     },
     {
-      key: 4,
-      title: "Learners with Disability",
-      quantity: 0,
-      percentage: 1.02,
-      logo: <StandingIcon />,
-      end: <PieIcon />,
-    },
-    {
       key: 5,
-      title: "Eligible girls for CT",
-      quantity: 0,
+      title: "Number of Patients",
+      quantity: 2,
       percentage: 9,
       logo: <UsersIcon />,
       end: <UpShortIcon />,
-    },
-    {
-      key: 6,
-      title: "Validated girls for CT",
-      quantity: 0,
-      percentage: 3.48,
-      logo: <AddUserIcon />,
-      end: <DownShortIcon />,
-    },
-    {
-      key: 7,
-      title: "Approved Expenditure",
-      quantity: 0,
-      percentage: 1.02,
-      logo: <CashOnlyIcon />,
-      end: <PieIcon />,
     },
   ];
 
@@ -85,33 +53,12 @@ const Page = () => {
     <>
       <Card className="mx-5">
         <CardBody>
-          <div className="flex justify-between items-center my-6">
-            <h3 className=""></h3>
-            <Select
-              color="primary"
-              label="Select year"
-              placeholder="Select a year"
-              defaultSelectedKeys={["2023"]}
-              className="max-w-xs"
-            >
-              {years.map((year) => (
-                <SelectItem key={year.value} value={year.value}>
-                  {year.label}
-                </SelectItem>
-              ))}
-            </Select>
-          </div>
-          <div className="gap-5 grid grid-cols-2 sm:grid-cols-4">
+          <div className="gap-5 grid grid-cols-2 sm:grid-cols-3">
             {list.map((item, index) => (
               <Card
                 shadow="sm"
                 key={index}
                 isPressable
-                onPress={() =>
-                  activeCard === item.key
-                    ? setActiveCard(null)
-                    : setActiveCard(item.key)
-                }
               >
                 <CardBody
                   className={`overflow-visible p-5 ${
@@ -130,28 +77,9 @@ const Page = () => {
                         {item.title}
                       </p>
                       <p className="text-primary">{item.quantity}</p>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm ">{item.end}</span>
-                        <small
-                          style={{
-                            color:
-                              item.percentage >= 9
-                                ? "#C9DD81"
-                                : item.percentage >= 3.48
-                                ? "#F5365C"
-                                : "#11CDEF",
-                          }}
-                        >
-                          {item.percentage}% Schools since last year
-                        </small>
-                      </div>
                     </div>
                     <div
-                      className={`w-10 h-10 flex justify-center items-center rounded-full overflow-hidden ${
-                        activeCard !== item.key
-                          ? "bg-primary-900"
-                          : " bg-gray-200"
-                      }`}
+                      className={`w-10 h-10 flex justify-center items-center rounded-full overflow-hidden bg-primary-900`}
                     >
                       {item?.logo}
                     </div>
