@@ -89,39 +89,35 @@ export async function POST(request) {
 
         if (response.ok) {
           const result = await response.json();
-          if (result.level) {
-            let severity = "No DR";
-            switch (result.level) {
-              case 0:
-                severity = "No DR";
-                break;
-              case 1:
-                severity = "Mild";
-                break;
-              case 2:
-                severity = "Moderate";
-                break;
-              case 3:
-                severity = "Severe";
-                break;
-              case 4:
-                severity = "Proliferative";
-                break;
-              default:
-                severity = "No DR";
-                break;
-            }
-            await prisma.dRClassification.update({
-              where: {
-                id: classification?.id,
-              },
-              data: {
-                severity: severity,
-              },
-            });
-          } else {
-            console.error(result.error);
+          let severity = "Normal";
+          switch (result.level) {
+            case 0:
+              severity = "Normal";
+              break;
+            case 1:
+              severity = "Mild";
+              break;
+            case 2:
+              severity = "Moderate";
+              break;
+            case 3:
+              severity = "Severe";
+              break;
+            case 4:
+              severity = "Proliferative";
+              break;
+            default:
+              severity = "Normal";
+              break;
           }
+          await prisma.dRClassification.update({
+            where: {
+              id: classification?.id,
+            },
+            data: {
+              severity: severity,
+            },
+          });
         } else {
           console.error("Server response not okay");
         }

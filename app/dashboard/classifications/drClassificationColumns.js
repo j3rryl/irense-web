@@ -28,33 +28,43 @@ export const drClassificationRender = ({ row, columnKey }) => {
     case "physician":
       return (
         <User
-        className="capitalize"  
+          className="capitalize"
           name={`${cellValue?.firstName} ${cellValue?.lastName}`}
           description={columnKey}
           avatarProps={{
-            src: cellValue?.image
+            src: cellValue?.image,
           }}
         />
         // <span>{cellValue?.firstName}</span>
       );
     case "severity":
       return (
-        <Chip color={cellValue==='No DR'?'primary':cellValue==='Mild'?'default':cellValue==='Moderate'?'secondary':cellValue==='Severe'?'warning':'danger'}>{cellValue}</Chip>
-      )
-    case "eyeSide":
-      return (
-        <span className="capitalize">{cellValue}</span>
+        <Chip
+          color={
+            cellValue === "Normal"
+              ? "primary"
+              : cellValue === "Mild"
+              ? "default"
+              : cellValue === "Moderate"
+              ? "secondary"
+              : cellValue === "Severe"
+              ? "warning"
+              : "danger"
+          }
+        >
+          {cellValue}
+        </Chip>
       );
+    case "eyeSide":
+      return <span className="capitalize">{cellValue}</span>;
     case "createdAt":
       return (
         <span>{new Date(cellValue)?.toLocaleString("en-us", options)}</span>
       );
     case "actions":
-      return <DRClassificationActions row={row}/>;
+      return <DRClassificationActions row={row} />;
     default:
-      return (
-        <span>{cellValue}</span>
-      )      
+      return <span>{cellValue}</span>;
   }
 };
 
