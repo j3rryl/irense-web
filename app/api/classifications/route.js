@@ -38,6 +38,9 @@ export async function GET(request) {
             physician: true,
             patient: true,
           },
+          orderBy: {
+            createdAt: "desc",
+          },
         });
         count = classifications?.length;
       } else {
@@ -45,6 +48,9 @@ export async function GET(request) {
           include: {
             physician: true,
             patient: true,
+          },
+          orderBy: {
+            createdAt: "desc",
           },
         });
         count = await prisma.dRClassification.count();

@@ -12,15 +12,20 @@ import PieIcon from "../components/icons/pie-icon";
 import { Select, SelectItem } from "@nextui-org/react";
 import GraduateIcon from "../components/icons/graduate-icon";
 import SchoolIcon from "../components/icons/school-icon";
+import useSWR from "swr";
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const Page = () => {
   const [activeCard, setActiveCard] = useState(null);
+  const { data, isLoading } = useSWR(`/api/dashboard`, fetcher, {
+    keepPreviousData: true,
+  });
   useEffect(() => {}, []);
   const list = [
     {
       key: 1,
       title: "Number of Tests",
-      quantity: 12,
+      quantity: data?.classifications,
       percentage: 9,
       logo: <SchoolIcon />,
       end: <UpShortIcon />,
@@ -28,7 +33,7 @@ const Page = () => {
     {
       key: 3,
       title: "Number of Physicians",
-      quantity: 2,
+      quantity: data?.physicians,
       percentage: 12,
       logo: <TeacherIcon />,
       end: <UpShortIcon />,
@@ -36,7 +41,7 @@ const Page = () => {
     {
       key: 5,
       title: "Number of Patients",
-      quantity: 2,
+      quantity: data?.patients,
       percentage: 9,
       logo: <UsersIcon />,
       end: <UpShortIcon />,
@@ -55,11 +60,7 @@ const Page = () => {
         <CardBody>
           <div className="gap-5 grid grid-cols-2 sm:grid-cols-3">
             {list.map((item, index) => (
-              <Card
-                shadow="sm"
-                key={index}
-                isPressable
-              >
+              <Card shadow="sm" key={index} isPressable>
                 <CardBody
                   className={`overflow-visible p-5 ${
                     activeCard == item.key ? "bg-primary-900" : "bg-white"
@@ -90,7 +91,6 @@ const Page = () => {
           </div>
         </CardBody>
       </Card>
-
     </>
   );
 };
