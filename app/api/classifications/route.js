@@ -16,6 +16,9 @@ export async function GET(request) {
           physician: true,
           patient: true,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
       });
       count = await prisma.dRClassification.count({
         where: { patientId: patientId },
